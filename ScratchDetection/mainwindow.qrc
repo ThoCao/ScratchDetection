@@ -1,0 +1,12 @@
+<RCC>
+  <qresource prefix="Icon">
+    <file>save-icon-5412.png</file>
+    <file>background.ico</file>
+    <file>black-stack-of-photos-24 - Copy.png</file>
+    <file>black-connected-24.png</file>
+    <file>black-disconnected-24.png</file>
+    <file>black-stack-of-photos-24.png</file>
+    <file>black-stop-24.png</file>
+    <file>black-pause-24.png</file>
+  </qresource>
+</RCC>
