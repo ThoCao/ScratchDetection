@@ -7,6 +7,7 @@
 #include <opencv2\opencv.hpp>
 #include <QtWidgets/QApplication>
 
+
 class ImgView : public QLabel
 {
 	Q_OBJECT
@@ -29,7 +30,8 @@ protected:
 		emit mouseReleased(ev);
 	}
 public:
-	void setImage(cv::Mat& image);
+	void setImage(cv::Mat& img);
+	void setImageScaled(cv::Mat &img);
 	void setImage(QImage& image);
 	inline void updateView(){
 		qApp->processEvents();

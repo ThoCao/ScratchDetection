@@ -9,6 +9,12 @@
 
 #include "ProccessingImage.h"
 
+#include <QGraphicsView>
+#include "QGraphicsProxyWidget"
+#include "MyRectangle.h"
+#include "edge.h"
+#include "node.h"
+
 class MainWindow : public QMainWindow
 {
 	Q_OBJECT
@@ -19,6 +25,8 @@ public:
 
 private:
 	Ui::MainWindowClass ui;
+protected:
+	bool eventFilter(QObject *obj, QEvent *event);
 public slots:
 	void on_actionOpen_Camera_triggered();
 	void on_actionClose_Camera_triggered();
@@ -36,6 +44,13 @@ private: // data for processing
 	ProccessingImage *processing = new ProccessingImage();
 	cv::Mat save_edge_img;
 	cv::Mat save_origin_img;
+	ImgView *main_image_view;
+	QGraphicsScene * scence;
+	MyRectangle *rectangle;
+private: // node and eadge
+	Node *centerNode;
+	Node *node1;// = new Node();
+	Node *node2;// = new Node();
 
 private:// status of product
 	cv::Mat pass_img;
