@@ -7,8 +7,6 @@ MyRectangle::MyRectangle()
 	Pressed = false;
 	setFlags(ItemIsSelectable);
 	setFlag(ItemIsMovable);
-	setFlag(ItemIsFocusable);
-	setFlag(ItemSendsGeometryChanges);
 }
 
 
@@ -24,6 +22,7 @@ void MyRectangle::paint(QPainter *painter, const QStyleOptionGraphicsItem *optio
 	QRectF rec = boundingRect();
 	QBrush brush(Qt::blue);
 
+
 	if (Pressed) {
 		brush.setColor(Qt::red);
 	}
@@ -31,8 +30,8 @@ void MyRectangle::paint(QPainter *painter, const QStyleOptionGraphicsItem *optio
 		brush.setColor(Qt::green);
 	}
 
-	painter->fillRect(rec, brush);
-	painter->drawRect(rec);
+	//painter->fillRect(rec, brush);
+	//painter->drawRect(rec);
 }
 
 void MyRectangle::mousePressEvent(QGraphicsSceneMouseEvent *event) {

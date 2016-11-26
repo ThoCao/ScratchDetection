@@ -13,7 +13,6 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
-#include <QtWidgets/QGraphicsView>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHBoxLayout>
@@ -58,12 +57,23 @@ public:
     QWidget *scrollAreaWidgetContents;
     QWidget *DecfecCharacters;
     QGridLayout *gridLayout_7;
-    QGraphicsView *graphicsView;
+    QScrollArea *scrollArea;
+    QWidget *scrollAreaWidgetContents_2;
+    QScrollArea *scrollArea_2;
+    QWidget *scrollAreaWidgetContents_3;
+    QScrollArea *scrollArea_3;
+    QWidget *scrollAreaWidgetContents_4;
+    QScrollArea *scrollArea_4;
+    QWidget *scrollAreaWidgetContents_5;
+    QScrollArea *scrollArea_5;
+    QWidget *scrollAreaWidgetContents_6;
+    QScrollArea *scrollArea_6;
+    QWidget *scrollAreaWidgetContents_7;
     QGroupBox *groupBox;
     QGridLayout *gridLayout_2;
     QVBoxLayout *verticalLayout;
     QHBoxLayout *horizontalLayout;
-    QPushButton *pushButton;
+    QPushButton *btn_Get_Roi_Image;
     QSpacerItem *horizontalSpacer;
     QPushButton *pushButton_2;
     QSpacerItem *verticalSpacer;
@@ -92,7 +102,7 @@ public:
     {
         if (MainWindowClass->objectName().isEmpty())
             MainWindowClass->setObjectName(QStringLiteral("MainWindowClass"));
-        MainWindowClass->resize(1313, 635);
+        MainWindowClass->resize(944, 635);
         actionExit = new QAction(MainWindowClass);
         actionExit->setObjectName(QStringLiteral("actionExit"));
         actionOpen_Camera = new QAction(MainWindowClass);
@@ -161,7 +171,7 @@ public:
         ScrollArea_Image_View->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QStringLiteral("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 1061, 368));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 706, 368));
         ScrollArea_Image_View->setWidget(scrollAreaWidgetContents);
 
         gridLayout_4->addWidget(ScrollArea_Image_View, 0, 0, 1, 1);
@@ -173,10 +183,65 @@ public:
         gridLayout_7->setSpacing(6);
         gridLayout_7->setContentsMargins(11, 11, 11, 11);
         gridLayout_7->setObjectName(QStringLiteral("gridLayout_7"));
-        graphicsView = new QGraphicsView(DecfecCharacters);
-        graphicsView->setObjectName(QStringLiteral("graphicsView"));
+        scrollArea = new QScrollArea(DecfecCharacters);
+        scrollArea->setObjectName(QStringLiteral("scrollArea"));
+        scrollArea->setWidgetResizable(true);
+        scrollAreaWidgetContents_2 = new QWidget();
+        scrollAreaWidgetContents_2->setObjectName(QStringLiteral("scrollAreaWidgetContents_2"));
+        scrollAreaWidgetContents_2->setGeometry(QRect(0, 0, 468, 243));
+        scrollArea->setWidget(scrollAreaWidgetContents_2);
 
-        gridLayout_7->addWidget(graphicsView, 0, 0, 1, 1);
+        gridLayout_7->addWidget(scrollArea, 0, 0, 2, 2);
+
+        scrollArea_2 = new QScrollArea(DecfecCharacters);
+        scrollArea_2->setObjectName(QStringLiteral("scrollArea_2"));
+        scrollArea_2->setWidgetResizable(true);
+        scrollAreaWidgetContents_3 = new QWidget();
+        scrollAreaWidgetContents_3->setObjectName(QStringLiteral("scrollAreaWidgetContents_3"));
+        scrollAreaWidgetContents_3->setGeometry(QRect(0, 0, 230, 117));
+        scrollArea_2->setWidget(scrollAreaWidgetContents_3);
+
+        gridLayout_7->addWidget(scrollArea_2, 0, 2, 1, 1);
+
+        scrollArea_3 = new QScrollArea(DecfecCharacters);
+        scrollArea_3->setObjectName(QStringLiteral("scrollArea_3"));
+        scrollArea_3->setWidgetResizable(true);
+        scrollAreaWidgetContents_4 = new QWidget();
+        scrollAreaWidgetContents_4->setObjectName(QStringLiteral("scrollAreaWidgetContents_4"));
+        scrollAreaWidgetContents_4->setGeometry(QRect(0, 0, 230, 118));
+        scrollArea_3->setWidget(scrollAreaWidgetContents_4);
+
+        gridLayout_7->addWidget(scrollArea_3, 1, 2, 1, 1);
+
+        scrollArea_4 = new QScrollArea(DecfecCharacters);
+        scrollArea_4->setObjectName(QStringLiteral("scrollArea_4"));
+        scrollArea_4->setWidgetResizable(true);
+        scrollAreaWidgetContents_5 = new QWidget();
+        scrollAreaWidgetContents_5->setObjectName(QStringLiteral("scrollAreaWidgetContents_5"));
+        scrollAreaWidgetContents_5->setGeometry(QRect(0, 0, 230, 117));
+        scrollArea_4->setWidget(scrollAreaWidgetContents_5);
+
+        gridLayout_7->addWidget(scrollArea_4, 2, 0, 1, 1);
+
+        scrollArea_5 = new QScrollArea(DecfecCharacters);
+        scrollArea_5->setObjectName(QStringLiteral("scrollArea_5"));
+        scrollArea_5->setWidgetResizable(true);
+        scrollAreaWidgetContents_6 = new QWidget();
+        scrollAreaWidgetContents_6->setObjectName(QStringLiteral("scrollAreaWidgetContents_6"));
+        scrollAreaWidgetContents_6->setGeometry(QRect(0, 0, 230, 117));
+        scrollArea_5->setWidget(scrollAreaWidgetContents_6);
+
+        gridLayout_7->addWidget(scrollArea_5, 2, 1, 1, 1);
+
+        scrollArea_6 = new QScrollArea(DecfecCharacters);
+        scrollArea_6->setObjectName(QStringLiteral("scrollArea_6"));
+        scrollArea_6->setWidgetResizable(true);
+        scrollAreaWidgetContents_7 = new QWidget();
+        scrollAreaWidgetContents_7->setObjectName(QStringLiteral("scrollAreaWidgetContents_7"));
+        scrollAreaWidgetContents_7->setGeometry(QRect(0, 0, 230, 117));
+        scrollArea_6->setWidget(scrollAreaWidgetContents_7);
+
+        gridLayout_7->addWidget(scrollArea_6, 2, 2, 1, 1);
 
         tabImageView->addTab(DecfecCharacters, QString());
 
@@ -195,10 +260,10 @@ public:
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setSpacing(6);
         horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
-        pushButton = new QPushButton(groupBox);
-        pushButton->setObjectName(QStringLiteral("pushButton"));
+        btn_Get_Roi_Image = new QPushButton(groupBox);
+        btn_Get_Roi_Image->setObjectName(QStringLiteral("btn_Get_Roi_Image"));
 
-        horizontalLayout->addWidget(pushButton);
+        horizontalLayout->addWidget(btn_Get_Roi_Image);
 
         horizontalSpacer = new QSpacerItem(13, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
@@ -313,7 +378,7 @@ public:
         MainWindowClass->setStatusBar(statusBar);
         menuBar = new QMenuBar(MainWindowClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1313, 21));
+        menuBar->setGeometry(QRect(0, 0, 944, 21));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QStringLiteral("menuFile"));
         menuView = new QMenu(menuBar);
@@ -344,7 +409,7 @@ public:
         retranslateUi(MainWindowClass);
         QObject::connect(actionExit, SIGNAL(triggered()), MainWindowClass, SLOT(close()));
 
-        tabImageView->setCurrentIndex(0);
+        tabImageView->setCurrentIndex(1);
         tabThresholdProcessing->setCurrentIndex(0);
 
 
@@ -379,7 +444,7 @@ public:
         tabImageView->setTabText(tabImageView->indexOf(ImageEditing), QApplication::translate("MainWindowClass", "Edit Character Set File", 0));
         tabImageView->setTabText(tabImageView->indexOf(DecfecCharacters), QApplication::translate("MainWindowClass", "Decfect Characterization", 0));
         groupBox->setTitle(QApplication::translate("MainWindowClass", "Control Panel", 0));
-        pushButton->setText(QApplication::translate("MainWindowClass", "PushButton", 0));
+        btn_Get_Roi_Image->setText(QApplication::translate("MainWindowClass", "Get ROI", 0));
         pushButton_2->setText(QApplication::translate("MainWindowClass", "PushButton", 0));
         groupBox_2->setTitle(QApplication::translate("MainWindowClass", "Threshold Limits", 0));
         label->setText(QApplication::translate("MainWindowClass", "Upper", 0));

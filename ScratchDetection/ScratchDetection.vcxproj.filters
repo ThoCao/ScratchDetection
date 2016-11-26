@@ -71,14 +71,14 @@
     <ClCompile Include="GeneratedFiles\Release\moc_ImgView.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="MyRectangle.cpp">
+    <ClCompile Include="ReSizable_Rubber_Band.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="edge.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ReSizable_Rubber_Band.cpp">
+      <Filter>Generated Files\Debug</Filter>
     </ClCompile>
-    <ClCompile Include="node.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="GeneratedFiles\Release\moc_ReSizable_Rubber_Band.cpp">
+      <Filter>Generated Files\Release</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -97,6 +97,9 @@
     <CustomBuild Include="LogViewer.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
+    <CustomBuild Include="ReSizable_Rubber_Band.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_mainwindow.h">
@@ -106,15 +109,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ProccessingImage.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MyRectangle.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="edge.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="node.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

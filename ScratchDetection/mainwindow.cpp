@@ -2,7 +2,7 @@
 
 
 MainWindow::MainWindow(QWidget *parent)
-	: QMainWindow(parent), main_image_view(new ImgView)
+	: QMainWindow(parent), main_image_view(new ImgView),_main_image_defect_1(new ImgView)
 {
 	ui.setupUi(this);
 
@@ -23,14 +23,25 @@ MainWindow::MainWindow(QWidget *parent)
 	// config scroll image view
 	ui.ScrollArea_Image_View->setWidget(main_image_view);
 	main_image_view->installEventFilter(this);
-	main_image_view->setMouseTracking(true);
-	// node
-	scence = new QGraphicsScene(this);
-	ui.graphicsView->setScene(scence);
+	//main_image_view->setMouseTracking(true);
 	
-	rectangle = new MyRectangle();
-	scence->addItem(rectangle);
-	// node 2
+	//
+
+	//ui.graphicsView->setBackgroundBrush(ImagePixmap);
+	//
+
+	// [5]
+	rubber_band = new ReSizable_Rubber_Band(main_image_view);
+	//rubber_band->move(100, 100);
+	rubber_band->resize(200,200);
+	rubber_band->setMinimumSize(100, 100);
+	// [5]
+
+	// [6] Tab: Defection Character
+	ui.scrollArea->setWidget(_main_image_defect_1);
+	cv::Mat load_roi = cv::imread("roi_img_out.bmp", 0);
+	_main_image_defect_1->setImage(load_roi);
+	// [6]
 }
 
 MainWindow::~MainWindow()
@@ -59,20 +70,27 @@ bool MainWindow::eventFilter(QObject * obj, QEvent * event)
 		if (obj == main_image_view) {
 			const QMouseEvent* const me_ptr = static_cast<const QMouseEvent*>(event);
 			ui.statusBar->showMessage("("+QString::number(me_ptr->x()) + ":" + QString::number(me_ptr->y())+")");
+			if (move_rubberband) {
+			
+				rubber_band->move(me_ptr->pos().x()- rubber_band->rect().width()/2,me_ptr->pos().y()- rubber_band->rect().height()/2);
+			}
 		}
 		
 		return 0;
 	}
-	else if (obj == main_image_view) {
+	if (obj == main_image_view) {
 		if (event->type() == QEvent::MouseButtonPress) {
 			const QMouseEvent* const me_ptr = static_cast<const QMouseEvent*>(event);
-	
-				std::cout << "clicking " << std::endl;
+			//std::cout << "clicking " << std::endl;
 			
-			
+			// [1] rubberband move
+			if (rubber_band->geometry().contains(me_ptr->pos())) {
+				move_rubberband = true;
+				std::cout << "rubber selected" << std::endl;
+			}
 		}
-		else if (event->type() == QEvent::MouseTrackingChange) {
-			std::cout << "moving tracking.......... " << std::endl;
+		else if (event->type() == QEvent::MouseButtonRelease) {
+			move_rubberband = false;
 		}
 		return 0;
 	}
@@ -100,6 +118,8 @@ void MainWindow::on_actionSingle_Shot_triggered(){
 
 	cv::Mat image;
 	bool found = Cam_Capture.ReceiveImage(image);
+	// copy to roi_img
+	image.copyTo(roi_img);
 	
 	main_image_view->setImage(image);
 
@@ -126,6 +146,19 @@ void MainWindow::on_actionBackGround_triggered(){
 void MainWindow::on_actionSaving_Image_triggered(){
 	if (!save_edge_img.empty()) cv::imwrite("edgedetection.bmp", save_edge_img);
 	if (!save_origin_img.empty()) cv::imwrite("original.bmp", save_origin_img);
+}
+
+void MainWindow::on_btn_Get_Roi_Image_clicked() {
+	if (!roi_img.empty()) {
+		QRectF rec = rubber_band->contentsRect();
+		cv::Rect roi(rubber_band->pos().x(), rubber_band->pos().y(), rec.width(), rec.height());
+		roi_img_out = roi_img(roi);
+		cv::imshow("roi", roi_img_out);
+		cv::imwrite("roi_img_out.bmp", roi_img_out);
+		cv::waitKey(10);
+		// set to tab defection
+		_main_image_defect_1->setImage(roi_img_out);
+	}
 }
 
 

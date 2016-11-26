@@ -10,10 +10,7 @@
 #include "ProccessingImage.h"
 
 #include <QGraphicsView>
-#include "QGraphicsProxyWidget"
-#include "MyRectangle.h"
-#include "edge.h"
-#include "node.h"
+#include "ReSizable_Rubber_Band.h"
 
 class MainWindow : public QMainWindow
 {
@@ -36,6 +33,8 @@ public slots:
 	void on_actionPause_triggered();
 	void on_actionBackGround_triggered();
 	void on_actionSaving_Image_triggered();
+	public slots:
+	void on_btn_Get_Roi_Image_clicked();
 private:
 	BaslerCam Cam_Capture;
 
@@ -45,16 +44,18 @@ private: // data for processing
 	cv::Mat save_edge_img;
 	cv::Mat save_origin_img;
 	ImgView *main_image_view;
-	QGraphicsScene * scence;
-	MyRectangle *rectangle;
-private: // node and eadge
-	Node *centerNode;
-	Node *node1;// = new Node();
-	Node *node2;// = new Node();
+	ReSizable_Rubber_Band* rubber_band;
+	bool move_rubberband=0;
+private:// ROI
+	cv::Mat roi_img;
+	cv::Mat roi_img_out;
+	cv::Mat roi_img_in;
 
 private:// status of product
 	cv::Mat pass_img;
 	cv::Mat fail_img;
+private:// Tab: Defection Character
+	ImgView* _main_image_defect_1;
 };
 
 #endif // MAINWINDOW_H
