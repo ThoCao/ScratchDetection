@@ -14,8 +14,6 @@ MainWindow::MainWindow(QWidget *parent)
 	ui.actionBackGround->setDisabled(1);
 
 	back_ground_img = cv::imread("background.bmp",0);
-	
-
 	// load status of product
 	pass_img = cv::imread("pass_status.jpg", 1);
 	fail_img = cv::imread("Failed.png", 1);
@@ -24,19 +22,11 @@ MainWindow::MainWindow(QWidget *parent)
 	ui.ScrollArea_Image_View->setWidget(main_image_view);
 	main_image_view->installEventFilter(this);
 	//main_image_view->setMouseTracking(true);
-	
 	//
-
-	//ui.graphicsView->setBackgroundBrush(ImagePixmap);
-	//
-
-	// [5]
+	// [2]
 	rubber_band = new ReSizable_Rubber_Band(main_image_view);
-	//rubber_band->move(100, 100);
-	rubber_band->resize(200,200);
-	rubber_band->setMinimumSize(100, 100);
-	// [5]
-
+	InitializeRubberBandRoi();
+	// [2]
 	// [6] Tab: Defection Character
 	ui.scrollArea->setWidget(_main_image_defect_1);
 	cv::Mat load_roi = cv::imread("roi_img_out.bmp", 0);
@@ -47,13 +37,14 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
 	delete processing;
+	//[2] Rubber Band Roi
+	SaveRubberBandRoi();
+	//[2] Rubber Band Roi
 }
 void MainWindow::on_actionOpen_Camera_triggered(){
 	if (Cam_Capture.OpenCam()){
 		std::cout << "Connection Successful. " << std::endl;
-		
 		ui.actionOpen_Camera->setDisabled(1);
-
 		ui.actionClose_Camera->setEnabled(1);
 		ui.actionContinuous_Shot->setEnabled(1);
 		ui.actionSingle_Shot->setEnabled(1);
@@ -65,29 +56,27 @@ void MainWindow::on_actionOpen_Camera_triggered(){
 }
 bool MainWindow::eventFilter(QObject * obj, QEvent * event)
 {
-
     if(event->type() == QEvent::MouseMove){
 		if (obj == main_image_view) {
 			const QMouseEvent* const me_ptr = static_cast<const QMouseEvent*>(event);
-			ui.statusBar->showMessage("("+QString::number(me_ptr->x()) + ":" + QString::number(me_ptr->y())+")");
+			ui.statusBar->showMessage("(" + QString::number(me_ptr->x()) + ":" + QString::number(me_ptr->y())+")");
 			if (move_rubberband) {
 			
 				rubber_band->move(me_ptr->pos().x()- rubber_band->rect().width()/2,me_ptr->pos().y()- rubber_band->rect().height()/2);
 			}
 		}
-		
 		return 0;
 	}
 	if (obj == main_image_view) {
 		if (event->type() == QEvent::MouseButtonPress) {
 			const QMouseEvent* const me_ptr = static_cast<const QMouseEvent*>(event);
 			//std::cout << "clicking " << std::endl;
-			
 			// [1] rubberband move
 			if (rubber_band->geometry().contains(me_ptr->pos())) {
 				move_rubberband = true;
 				std::cout << "rubber selected" << std::endl;
 			}
+			// [1]
 		}
 		else if (event->type() == QEvent::MouseButtonRelease) {
 			move_rubberband = false;
@@ -100,7 +89,6 @@ void MainWindow::on_actionClose_Camera_triggered(){
 	if (Cam_Capture.CloseCam()){
 
 		ui.actionOpen_Camera->setEnabled(1);
-
 		ui.actionSingle_Shot->setDisabled(1);
 		ui.actionClose_Camera->setDisabled(1);
 		ui.actionContinuous_Shot->setDisabled(1);
@@ -146,6 +134,37 @@ void MainWindow::on_actionBackGround_triggered(){
 void MainWindow::on_actionSaving_Image_triggered(){
 	if (!save_edge_img.empty()) cv::imwrite("edgedetection.bmp", save_edge_img);
 	if (!save_origin_img.empty()) cv::imwrite("original.bmp", save_origin_img);
+}
+
+void MainWindow::InitializeRubberBandRoi()
+{
+	// Load
+	//[2] Rubber Band Roi
+	cv::FileStorage rubber(_rubber_name_file, cv::FileStorage::READ);
+	rubber["rubber_intital_pos_x"] >> _rubber_intital_pos.x;
+	rubber["rubber_intital_pos_y"] >> _rubber_intital_pos.y;
+	rubber["rubberwidth"]          >> _rubber_width;
+	rubber["rubberheight"]         >> _rubber_height;
+	rubber.release();
+	//[2] Rubber Band Roi
+	// Write
+	rubber_band->resize(_rubber_width, _rubber_height);
+	rubber_band->move(_rubber_intital_pos.x, _rubber_intital_pos.y);
+}
+
+void MainWindow::SaveRubberBandRoi()
+{
+	//[2] Rubber Band Roi
+	_rubber_intital_pos = cv::Point(rubber_band->pos().x(), rubber_band->pos().y());
+	_rubber_width = rubber_band->width();
+	_rubber_height = rubber_band->height();
+	cv::FileStorage rubber(_rubber_name_file, cv::FileStorage::WRITE);
+	rubber << "rubber_intital_pos_x" << _rubber_intital_pos.x;
+	rubber << "rubber_intital_pos_y" << _rubber_intital_pos.y;
+	rubber << "rubberwidth"          << _rubber_width;
+	rubber << "rubberheight"         << _rubber_height;
+	rubber.release();
+	//[2] Rubber Band Roi
 }
 
 void MainWindow::on_btn_Get_Roi_Image_clicked() {
